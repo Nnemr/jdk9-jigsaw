@@ -4,6 +4,8 @@ source ../../common-functions.sh
 
 COM_GREETINGS_FOLDER="mods/com.greetings"
 
+echo $COM_GREETINGS_FOLDER
+
 runTree src
 
 echo ""
@@ -20,10 +22,7 @@ echo "${info} *** Compiling modules in '$COM_GREETINGS_FOLDER' *** ${normal}"
 #
 # The compiler creates the 'mods' folder, if it does not exist already and places compiled modules into them.
 
-javac [param to specify path to the module*] mods \
-      -d [path to the compiled module**] \
-      src/com.greetings/module-info.java \
-      src/com.greetings/com/greetings/Main.java
+javac -p src/com.greetings -d mods $(find src/com.greetings -name *.java)
 
 #
 # * can be either long or short form, look for tool references, quick started guides, and other documentation in the Java 9 Resource (https://github.com/AdoptOpenJDK/jdk9-jigsaw/blob/master/Java-9-Resources.md).
@@ -40,11 +39,12 @@ javac [param to specify path to the module*] mods \
 #
 # *******************************************************************************************************************************
 
+echo "$COM_GREETINGS_FOLDER"
 
 echo ""
 echo "${info} *** Finished compiling modules into the '$COM_GREETINGS_FOLDER' folder *** ${normal}"
 
 echo ""
 echo "${info} *** Displaying the contents (compiled modules) of the '$COM_GREETINGS_FOLDER' folder *** ${normal}"
-runTree "$COM_GREETINGS_FOLDER"
+runTree mods
 
